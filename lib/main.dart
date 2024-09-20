@@ -1,11 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_tutorial/pages/login/login.dart';
-<<<<<<< HEAD
 import 'package:firebase_tutorial/pages/signup/signup.dart';
-=======
->>>>>>> bf1ba5d9ee043da03fe118b3cdfb2226be0f0ad1
 import 'package:flutter/material.dart';
-
 import 'firebase_options.dart';
 
 void main() async {
@@ -20,10 +16,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-<<<<<<< HEAD
-=======
-  // This widget is the root of your application.
->>>>>>> bf1ba5d9ee043da03fe118b3cdfb2226be0f0ad1
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,16 +25,13 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-<<<<<<< HEAD
+
       home: const HomePage(),
-=======
-      home: LoginPage(),
->>>>>>> bf1ba5d9ee043da03fe118b3cdfb2226be0f0ad1
+
     );
   }
 }
 
-<<<<<<< HEAD
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -90,6 +80,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-=======
 
->>>>>>> bf1ba5d9ee043da03fe118b3cdfb2226be0f0ad1
