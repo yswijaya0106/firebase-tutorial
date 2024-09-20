@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_tutorial/services/auth_service.dart';
 import 'package:firebase_tutorial/screen/pages/login/login.dart';
+import 'package:firebase_tutorial/navigation.dart';
 
 class SignUpPage extends StatelessWidget {
   final AuthService _authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  int _selectedIndex = 0;
 
   SignUpPage({super.key});
 
@@ -69,6 +71,20 @@ class SignUpPage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: (index) {
+          Navigator.of(context).pushReplacementNamed(
+            index == 0
+                ? '/login'
+                : index == 1
+                    ? '/signup'
+                    : index == 3
+                        ? '/otp'
+                        : '/',
+          );
+        },
       ),
     );
   }

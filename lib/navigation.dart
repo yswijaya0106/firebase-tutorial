@@ -1,7 +1,84 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_tutorial/services/auth_service.dart';
+import 'package:firebase_tutorial/screen/pages/signup/signup.dart';
+import 'package:firebase_tutorial/screen/pages/signup/signup_otp.dart';
+import 'package:firebase_tutorial/routes/routes.dart';
+import 'package:firebase_tutorial/screen/pages/home/home.dart';
 
-class CustomBottomNavigationBar extends StatefulWidget {
+class MainScreen extends StatefulWidget {
+  final int initialIndex;
+
+  MainScreen({this.initialIndex = 0});
+
+  @override
+  _MainScreenState createState() => _MainScreenState();
+}
+
+class _MainScreenState extends State<MainScreen> {
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedIndex = widget.initialIndex;
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    if (index == 0) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainScreen(initialIndex: 0)),
+      );
+    } else if (index == 1) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainScreen(initialIndex: 1)),
+      );
+    } else if (index == 2) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainScreen(initialIndex: 2)),
+      );
+    } else if (index == 3) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => MainScreen(initialIndex: 3)),
+      );
+    }
+  }
+
+  Widget _getSelectedPage() {
+    switch (_selectedIndex) {
+      case 1:
+        return SignUpPage();
+      case 2:
+        return HomePage();
+      case 3:
+        return SignUpOTPPage();
+      default:
+        return HomePage();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Navigation Example'),
+      ),
+      body: _getSelectedPage(),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
+      ),
+    );
+  }
+}
+
+class CustomBottomNavigationBar extends StatelessWidget {
   final int selectedIndex;
   final Function(int) onItemTapped;
 
@@ -9,54 +86,6 @@ class CustomBottomNavigationBar extends StatefulWidget {
     required this.selectedIndex,
     required this.onItemTapped,
   });
-
-  @override
-  _CustomBottomNavigationBarState createState() =>
-      _CustomBottomNavigationBarState();
-}
-
-class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
-  Future<void> _showLogoutConfirmationDialog() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Confirm Logout'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('Are you sure you want to logout?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('Cancel'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            TextButton(
-              child: Text('Logout'),
-              onPressed: () {
-                AuthService().signOut();
-                Navigator.of(context).pushReplacementNamed('/login');
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _onItemTapped(int index) {
-    if (index == 2) {
-      _showLogoutConfirmationDialog();
-    } else {
-      widget.onItemTapped(index);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,13 +100,27 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           label: 'Register',
         ),
         BottomNavigationBarItem(
+          icon: Icon(Icons.verified_user),
+          label: 'SignUp OTP',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.home),
           label: 'Home',
         ),
       ],
-      currentIndex: widget.selectedIndex,
+      currentIndex: selectedIndex,
       selectedItemColor: Colors.amber[800],
-      onTap: _onItemTapped,
+      unselectedItemColor: Colors.grey,
+      onTap: (index) {
+        onItemTapped(index);
+      },
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    initialRoute: '/',
+    routes: appRoutes,
+  ));
 }
