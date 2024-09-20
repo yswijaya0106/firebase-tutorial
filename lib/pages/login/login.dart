@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_tutorial/services/auth_service.dart';
+import 'package:firebase_tutorial/pages/home/home.dart';
 
 class LoginPage extends StatelessWidget {
   final AuthService _authService = AuthService();
@@ -12,7 +13,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -48,11 +49,19 @@ class LoginPage extends StatelessWidget {
                 onPressed: () async {
                   String email = _emailController.text;
                   String password = _passwordController.text;
-                  User? user = await _authService.signInWithEmailAndPassword(email, password);
-                  if (user != null) {
-                    // Navigate to home page or show success message
-                  } else {
-                    // Show error message
+                  try {
+                    User? user = await _authService.signInWithEmailAndPassword(
+                        email, password);
+                    if (user != null) {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomePage()),
+                      );
+                    }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text('Login failed: $e')),
+                    );
                   }
                 },
                 child: const Text('Login'),

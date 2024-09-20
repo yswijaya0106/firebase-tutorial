@@ -13,7 +13,7 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -50,7 +50,8 @@ class SignUpPage extends StatelessWidget {
                   String email = _emailController.text;
                   String password = _passwordController.text;
                   try {
-                    User? user = await _authService.signInWithEmailAndPassword(email, password);
+                    User? user = await _authService
+                        .registerWithEmailAndPassword(email, password);
                     if (user != null) {
                       Navigator.pushReplacement(
                         context,

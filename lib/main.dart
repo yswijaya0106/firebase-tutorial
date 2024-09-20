@@ -7,15 +7,19 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print('Firebase initialized successfully');
+  } catch (e) {
+    print('Failed to initialize Firebase: $e');
+  }
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +29,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-
-      home: const HomePage(),
-
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginPage(),
+        '/home': (context) => HomePage(),
+        '/login': (context) => LoginPage(),
+      },
     );
   }
 }
@@ -80,4 +87,3 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
-
