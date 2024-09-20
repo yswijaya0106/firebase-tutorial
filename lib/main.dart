@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_tutorial/pages/login/login.dart';
-import 'package:firebase_tutorial/pages/signup/signup.dart';
 import 'package:flutter/material.dart';
 import 'firebase_options.dart';
+import 'routes/routes.dart'; // Import the routes
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,61 +28,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginPage(),
-        '/home': (context) => HomePage(),
-        '/login': (context) => LoginPage(),
-      },
-    );
-  }
-}
-
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-
-  final List<Widget> _pages = <Widget>[
-    LoginPage(),
-    SignUpPage(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Welcome'),
-      ),
-      body: Center(
-        child: _pages.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.login),
-            label: 'Login',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.app_registration),
-            label: 'Sign Up',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.deepPurple,
-        onTap: _onItemTapped,
-      ),
+      initialRoute: '/', // Ensure this is set to "/"
+      routes: appRoutes, // Ensure this is correctly set
     );
   }
 }
